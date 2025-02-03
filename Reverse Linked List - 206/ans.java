@@ -21,7 +21,8 @@ class Solution {
             pre = cur;
             cur = next;
             if (next != null)
-                next = next.next;
+                return pre;
+            next = next.next;
         }
         return pre;
     }
