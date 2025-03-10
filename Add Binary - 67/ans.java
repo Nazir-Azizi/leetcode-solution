@@ -1,77 +1,27 @@
 class Solution {
     public String addBinary(String a, String b) {
 
-        int first = a.length() - 1;
-        int second = b.length() - 1;
-        boolean carry = false;
-        StringBuilder resultString = new StringBuilder();
+        int i = a.length() - 1;
+        int j = b.length() - 1;
+        int carry = 0;
+        StringBuilder rs = new StringBuilder();
 
         char[] aArray = a.toCharArray();
         char[] bArray = b.toCharArray();
 
-        while (first >= 0 && second >= 0){
-            if (aArray[first] == bArray[second] && carry){
-                if (aArray[first] == '1')
-                    resultString.append('1');
-                else{
-                    resultString.append('1');
-                    carry = false;
-                }
-            }
-            else if (aArray[first] == bArray[second] && !carry){
-                if (aArray[first] == '1'){
-                    resultString.append('0');
-                    carry = true;
-                }else{
-                    resultString.append('0');
-                    carry = false;
-                }
-            }else {
-                if (carry)
-                    resultString.append('0');
-                else
-                    resultString.append('1');
-            }
-            first--; second--;
-        }
-        // System.out.println(resultString.toString());
+        while (i >= 0 || j >= 0 || carry > 0){
+            int aN = (i >= 0) ? aArray[i] - '0' : 0;
+            int bN = (j >= 0) ? bArray[j] - '0' : 0;
 
+            int sum = aN + bN + carry;
+            int digit = sum % 2;
+            carry = sum / 2;
 
-        while (first >= 0){
-            if (aArray[first] == '1'){
-                if (carry)
-                    resultString.append('0');
-                else
-                    resultString.append('1');
-            }else{
-                if (carry){
-                    resultString.append('1');
-                    carry = false;
-                }
-                else
-                    resultString.append('0');
-            }
-            first--;
-        }
+            i--;
+            j--;
 
-        while (second >= 0){
-            if (bArray[second] == '1'){
-                if (carry)
-                    resultString.append('0');
-                else
-                    resultString.append('1');
-            }else{
-                if (carry){
-                    resultString.append('1');
-                    carry = false;
-                }
-                else
-                    resultString.append('0');
-            }
-            second--;
+            rs.append((char) (digit + '0'));
         }
-        if (carry)
-            resultString.append('1');
-        return resultString.reverse().toString();
+        return rs.reverse().toString();
     }
 }
